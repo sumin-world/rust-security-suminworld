@@ -54,7 +54,7 @@ High-performance async TCP port scanner with concurrent connection handling.
 ## Getting Started
 
 ```bash
-git clone https://github.com/suminworld/sum-rust-secu-lab.git
+git clone https://github.com/sumin-world/sum-rust-secu-lab.git
 cd sum-rust-secu-lab
 cargo build --release
 
