@@ -1,12 +1,15 @@
+[readme_template.md](https://github.com/user-attachments/files/21904598/readme_template.md)
 # sum-rust-secu-lab
 
-sum-rust-secu-lab
+> Security tools and research built with Rust
 
-Security tools and research built with Rust
+## About
 
-About
 Personal security laboratory for learning cybersecurity concepts through hands-on Rust development. Starting with basic network tools and gradually expanding into various security domains.
-Repository Structure
+
+## Repository Structure
+
+```
 sum-rust-secu-lab/
 ├── src/
 │   └── main.rs              # Port scanner (current)
@@ -25,32 +28,41 @@ sum-rust-secu-lab/
 │   └── references.md        # Useful resources and links
 ├── examples/                # Example usage and test cases
 └── README.md
-Current Tools
-Port Scanner
+```
+
+## Current Tools
+
+### Port Scanner
 High-performance async TCP port scanner with concurrent connection handling.
-→ See tools/port_scanner/ for detailed usage and features.
-Planned Tools
+→ See [tools/port_scanner/](tools/port_scanner/) for detailed usage and features.
 
-Hash Cracker - Multi-algorithm password and hash analysis
-Log Analyzer - Security log parsing and correlation
-Web Fuzzer - Directory and parameter discovery
-Packet Sniffer - Real-time network traffic analysis
-Crypto Tools - Cryptographic algorithm implementations
+## Planned Tools
 
-Learning Focus
+- **Hash Cracker** - Multi-algorithm password and hash analysis
+- **Log Analyzer** - Security log parsing and correlation
+- **Web Fuzzer** - Directory and parameter discovery
+- **Packet Sniffer** - Real-time network traffic analysis
+- **Crypto Tools** - Cryptographic algorithm implementations
 
-Async Rust Programming - Tokio, concurrency patterns
-Network Security - TCP/IP, protocols, scanning techniques
-Performance Optimization - Memory safety, zero-cost abstractions
-CLI Tool Design - User experience, argument parsing
-Security Concepts - Reconnaissance, analysis, defensive tools
+## Learning Focus
 
-Getting Started
-bashgit clone https://github.com/suminworld/sum-rust-secu-lab.git
+- **Async Rust Programming** - Tokio, concurrency patterns
+- **Network Security** - TCP/IP, protocols, scanning techniques  
+- **Performance Optimization** - Memory safety, zero-cost abstractions
+- **CLI Tool Design** - User experience, argument parsing
+- **Security Concepts** - Reconnaissance, analysis, defensive tools
+
+## Getting Started
+
+```bash
+git clone https://github.com/suminworld/sum-rust-secu-lab.git
 cd sum-rust-secu-lab
 cargo build --release
 
 # Run port scanner
 cargo run -- --help
-Disclaimer
+```
+
+## Disclaimer
+
 These tools are for educational and authorized testing purposes only. Always ensure you have permission before testing any systems you don't own.
