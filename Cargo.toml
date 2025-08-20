@@ -1,9 +1,10 @@
-[package]
-name = "sum-rust-secu-lab"
+[workspace]
+resolver = "2"
+members = [
+    "tools/port_scanner"
+]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2021"
 authors = ["suminworld"]
-
-[dependencies]
-clap = "4.0"
-tokio = { version = "1.0", features = ["full"] }
