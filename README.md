@@ -1,4 +1,3 @@
-[readme_template.md](https://github.com/user-attachments/files/21904598/readme_template.md)
 # sum-rust-secu-lab
 
 > Security tools and research built with Rust
