@@ -1,10 +1,15 @@
 [workspace]
-resolver = "2"
 members = [
-    "tools/port_scanner"
+  "tools/port_scanner",
+  "tools/packet-match-fuzz",
 ]
+resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
 authors = ["suminworld"]
+
+# 공통으로 쓸 의존성 있으면 여기 선언 가능
+#[workspace.dependencies]
+#proptest = "1"

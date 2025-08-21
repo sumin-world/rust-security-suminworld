@@ -1,0 +1,9 @@
+[package]
+name = "packet-match-fuzz"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "KMP-based packet matcher with streaming support."
+
+[dependencies]
+# 필요시 dev-deps 등 추가
