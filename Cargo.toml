@@ -2,13 +2,15 @@
 members = [
   "tools/port_scanner",
   "tools/packet-match-fuzz",
+  "tools/discord_audit_bot",
+  "research/crypto",
 ]
 resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-authors = ["suminworld"]
+authors = ["sumin-world"]
 
 # 공통으로 쓸 의존성 있으면 여기 선언 가능
 #[workspace.dependencies]
