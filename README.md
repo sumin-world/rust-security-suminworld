@@ -119,29 +119,26 @@ Advanced pattern matching tool for streaming packet data using the Knuth-Morris-
 
 ## 📁 Project Structure
 
-```
-sum-rust-secu-lab/
-├── tools/                   # Individual security tools (Rust crates)
-│   ├── port_scanner/        # ✅ Async TCP port scanner 
-│   ├── discord_audit_bot/   # ✅ Discord security audit bot
-│   ├── packet-match-fuzz/   # 🚧 KMP-based packet matching
-│   ├── hash_cracker/        # 📋 Password & hash cracking tool
-│   ├── log_analyzer/        # 📋 Security log analysis tool
-│   ├── web_fuzzer/          # 📋 Web directory/parameter fuzzer
-│   └── packet_sniffer/      # 📋 Network packet sniffer
-├── research/                # Security research modules
-│   ├── crypto/              # ✅ Cryptographic algorithms
-│   ├── merkle/              # ✅ Merkle tree implementation
-│   ├── protocols/           # 🚧 Network protocol analysis
-│   └── vulns/               # 📋 Vulnerability research & PoCs
-├── docs/                    # Documentation and learning resources
-│   ├── learning_notes.md    # Study notes and progress logs
-│   ├── tool_usage.md        # Detailed usage guides
-│   └── references.md        # Resources and references
-├── examples/                # Example usage and test cases
-├── LICENSE                  # MIT License
-└── README.md                # This file
-```
+- **[tools/](./tools/)** — Individual security tools (Rust crates)
+  - **[port_scanner/](./tools/port_scanner/)** — ✅ Async TCP port scanner 
+  - **[discord_audit_bot/](./tools/discord_audit_bot/)** — ✅ Discord security audit bot
+  - **packet-match-fuzz/** — 🚧 KMP-based packet matching
+  - **hash_cracker/** — 📋 Password & hash cracking tool
+  - **log_analyzer/** — 📋 Security log analysis tool
+  - **web_fuzzer/** — 📋 Web directory/parameter fuzzer
+  - **packet_sniffer/** — 📋 Network packet sniffer
+- **[research/](./research/)** — Security research modules
+  - **[crypto/](./research/crypto/)** — ✅ Cryptographic algorithms
+  - **[merkle/](./research/merkle/)** — ✅ Merkle tree implementation
+  - **protocols/** — 🚧 Network protocol analysis
+  - **vulns/** — 📋 Vulnerability research & PoCs
+- **[docs/](./docs/)** — Documentation & learning resources
+  - **[learning_notes.md](./docs/learning_notes.md)**
+  - **[tool_usage.md](./docs/tool_usage.md)**
+  - **[references.md](./docs/references.md)**
+- **[examples/](./examples/)** — Example usage and test cases
+- **[LICENSE](./LICENSE)** — MIT License
+- **[README.md](./README.md)** — This file
 
 **Legend:** ✅ Complete | 🚧 In Progress | 📋 Planned
 
