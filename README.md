@@ -2,8 +2,8 @@
 
 [![Rust](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub last commit](https://img.shields.io/github/last-commit/sumin-world/sum-rust-secu-lab)](https://github.com/sumin-world/sum-rust-secu-lab/commits/main)
-[![GitHub stars](https://img.shields.io/github/stars/sumin-world/sum-rust-secu-lab?style=social)](https://github.com/sumin-world/sum-rust-secu-lab/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/sumin-world/rust-security-suminworld)](https://github.com/sumin-world/rust-security-suminworld/commits/main)
+[![GitHub stars](https://img.shields.io/github/stars/sumin-world/rust-security-suminworld?style=social)](https://github.com/sumin-world/rust-security-suminworld/stargazers)
 
 > **Rust-based Security Research Lab**  
 > Passive Wi-Fi auditing, packet fuzzing, Discord security bots, and educational crypto & kernel exploit modules.
@@ -18,7 +18,7 @@
 
 ## 🎯 Overview
 
-**sum-rust-secu-lab** is a personal security laboratory focused on learning cybersecurity concepts through hands-on Rust development. The project demonstrates Rust's strengths in security applications: memory safety, fearless concurrency, and zero-cost abstractions.
+**rust-security-suminworld** is a comprehensive collection of Rust-based cybersecurity tools and research projects designed for learning and demonstrating security concepts. This repository showcases Rust's capabilities in building high-performance, memory-safe security applications.
 
 ### 🌟 Key Features
 
@@ -124,7 +124,7 @@ cargo test -p merkle
 
 ### 🔬 In Development
 
-#### [🎯 Packet Pattern Matcher](./research/packet-match-fuzz/)
+#### [🎯 Packet Pattern Matcher](./tools/packet-match-fuzz/)
 Advanced pattern matching tool for streaming packet data using the Knuth-Morris-Pratt (KMP) algorithm.
 
 **Planned Features:**
@@ -135,10 +135,8 @@ Advanced pattern matching tool for streaming packet data using the Knuth-Morris-
 
 ## 📁 Project Structure
 
-## 📁 Project Structure
-
 ```
-sum-rust-secu-lab/
+rust-security-suminworld/
 ├── tools/                   # Individual security tools (Rust crates)
 │   ├── discord_audit_bot/   # ✅ Discord security audit bot
 │   ├── packet-match-fuzz/   # ✅ KMP-based pattern matching & fuzzing
@@ -169,15 +167,22 @@ sum-rust-secu-lab/
 ### Prerequisites
 
 - **Rust**: Install via [rustup](https://rustup.rs/) (2021 edition or later)
-- **Cargo**: Comes with Rust installation
-- **Internet connection**: For dependency resolution
+- **System Dependencies**: 
+  ```bash
+  # Ubuntu/Debian (for Wi-Fi tools)
+  sudo apt install -y libpcap-dev build-essential
+  
+  # macOS
+  brew install libpcap
+  ```
+- **Hardware**: USB Wi-Fi adapter for monitor mode (optional, for wifi_audit)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/sumin-world/sum-rust-secu-lab.git
-   cd sum-rust-secu-lab
+   git clone https://github.com/sumin-world/rust-security-suminworld.git
+   cd rust-security-suminworld
    ```
 
 2. **Build all tools**
@@ -187,24 +192,14 @@ sum-rust-secu-lab/
 
 3. **Build specific tool**
    ```bash
-   cargo build -p port_scanner --release
+   cargo build -p discord_audit_bot --release
+   cargo build -p wifi_audit --release
+   cargo build -p packet-match-fuzz --release
    ```
 
 ### Running Tools
 
-#### Port Scanner
-```bash
-# Basic usage
-cargo run -p port_scanner -- --help
-
-# Scan common ports
-cargo run -p port_scanner -- 192.168.1.1 -p 22,80,443
-
-# Fast scan of top 1000 ports
-cargo run -p port_scanner -- example.com --fast
-```
-
-#### Discord Bot
+#### Discord Security Bot
 ```bash
 # Set up environment
 cd tools/discord_audit_bot
@@ -214,7 +209,28 @@ echo "DISCORD_TOKEN=your_token" > .env
 cargo run -p discord_audit_bot
 ```
 
-#### Crypto Examples
+#### Wi-Fi Auditing
+```bash
+# Setup monitor mode
+sudo airmon-ng start wlan0  # Creates wlan0mon
+
+# Basic audit
+sudo cargo run -p wifi_audit -- --iface wlan0mon
+
+# With client monitoring
+sudo cargo run -p wifi_audit -- --iface wlan0mon --list-clients
+```
+
+#### Packet Pattern Fuzzing
+```bash
+# Run pattern matching tests
+cargo run -p packet-match-fuzz --example kmp_demo
+
+# Custom payload fuzzing
+cargo run -p packet-match-fuzz -- --pattern "HTTP" --input sample.pcap
+```
+
+#### Cryptography Examples
 ```bash
 cargo run -p crypto --example demo
 ```
@@ -222,11 +238,12 @@ cargo run -p crypto --example demo
 ## 🛣️ Roadmap
 
 ### Phase 1: Core Tools (Current)
-- [x] Async TCP Port Scanner
-- [x] Discord Security Audit Bot  
+- [x] Discord Security Audit Bot
+- [x] Wi-Fi Audit Tool (Monitor Mode)
+- [x] Packet Pattern Matcher & Fuzzer
 - [x] Basic Cryptographic Toolkit
 - [x] Merkle Tree Implementation
-- [ ] KMP Packet Pattern Matcher
+- [x] Linux Kernel Exploitation Labs
 
 ### Phase 2: Advanced Tools (Next)
 - [ ] **Hash Cracker** - Multi-algorithm password analysis
@@ -307,7 +324,8 @@ We welcome contributions! This project is designed for learning, so contribution
 ## 📊 Performance & Security
 
 ### Performance Characteristics
-- **Port Scanner**: Concurrent async scanning with configurable timeout and thread limits
+- **Discord Bot**: Concurrent async command processing with rate limiting
+- **Wi-Fi Audit**: Real-time packet capture and analysis with minimal CPU overhead
 - **Crypto Operations**: Focus on educational clarity and correctness over raw speed
 - **Memory Usage**: Rust's zero-cost abstractions with minimal heap allocation
 
@@ -352,9 +370,9 @@ The authors assume **no liability** for misuse of the provided tools. Users are 
 ## 🔗 Links & Resources
 
 ### Project Links
-- **Repository**: [github.com/sumin-world/sum-rust-secu-lab](https://github.com/sumin-world/sum-rust-secu-lab)
-- **Issues**: [Report bugs or request features](https://github.com/sumin-world/sum-rust-secu-lab/issues)
-- **Releases**: [Latest releases and versions](https://github.com/sumin-world/sum-rust-secu-lab/releases)
+- **Repository**: [github.com/sumin-world/rust-security-suminworld](https://github.com/sumin-world/rust-security-suminworld)
+- **Issues**: [Report bugs or request features](https://github.com/sumin-world/rust-security-suminworld/issues)
+- **Releases**: [Latest releases and versions](https://github.com/sumin-world/rust-security-suminworld/releases)
 
 ### Learning Resources
 - **[The Rust Book](https://doc.rust-lang.org/book/)** - Official Rust documentation
@@ -373,7 +391,7 @@ The authors assume **no liability** for misuse of the provided tools. Users are 
 ---
 
 <div align="center">
-<a href="https://github.com/sumin-world/sum-rust-secu-lab">⭐ Star</a> • 
-<a href="https://github.com/sumin-world/sum-rust-secu-lab/issues">Issues</a> • 
-<a href="https://github.com/sumin-world/sum-rust-secu-lab/releases">Releases</a>
+<a href="https://github.com/sumin-world/rust-security-suminworld">⭐ Star</a> • 
+<a href="https://github.com/sumin-world/rust-security-suminworld/issues">Issues</a> • 
+<a href="https://github.com/sumin-world/rust-security-suminworld/releases">Releases</a>
 </div>
