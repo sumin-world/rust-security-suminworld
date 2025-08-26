@@ -5,9 +5,16 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/sumin-world/sum-rust-secu-lab)](https://github.com/sumin-world/sum-rust-secu-lab/commits/main)
 [![GitHub stars](https://img.shields.io/github/stars/sumin-world/sum-rust-secu-lab?style=social)](https://github.com/sumin-world/sum-rust-secu-lab/stargazers)
 
-> **Security tools and research built with Rust**
+> **Rust-based Security Research Lab**  
+> Passive Wi-Fi auditing, packet fuzzing, Discord security bots, and educational crypto & kernel exploit modules.
 
-A comprehensive collection of Rust-based cybersecurity tools and research projects designed for learning and demonstrating security concepts. This repository showcases Rust's capabilities in building high-performance, memory-safe security applications.
+> A comprehensive collection of Rust-based cybersecurity tools and research projects designed for learning and demonstrating security concepts. This repository showcases Rust's capabilities in building high-performance, memory-safe security applications.
+
+---
+
+## 🔖 Topics / Tags
+`rust` · `security` · `cybersecurity` · `wifi` · `wireless-security` ·  
+`penetration-testing` · `80211` · `pcap` · `rust-security` · `passive-monitoring`
 
 ## 🎯 Overview
 
