@@ -304,8 +304,8 @@ We welcome contributions from the security community!
 ### Development Setup
 ```bash
 # Clone and build
-git clone <repository-url>
-cd sum-rust-secu-lab/tools/wifi_audit
+git clone https://github.com/sumin-world/rust-security-suminworld.git
+cd rust-security-suminworld/tools/wifi_audit
 cargo build
 
 # Run tests
