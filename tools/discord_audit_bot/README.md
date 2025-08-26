@@ -45,8 +45,8 @@ It provides automated & manual scans, security checklists, and gamified challeng
 ## 🚀 Getting Started
 ```bash
 # Clone repository
-git clone https://github.com/sumin-world/rust-security-lab.git
-cd rust-security-lab/tools/discord_audit_bot
+git clone https://github.com/sumin-world/rust-security-suminworld.git
+cd rust-security-suminworld/tools/discord_audit_bot
 
 # Create .env file
 echo "DISCORD_TOKEN=YOUR_TOKEN_HERE" > .env
