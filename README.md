@@ -21,58 +21,67 @@ A comprehensive collection of Rust-based cybersecurity tools and research projec
 - **Educational Focus**: Comprehensive documentation and learning resources
 - **Modular Architecture**: Clean separation of tools, research, and documentation
 
-## 🛠️ Current Tools
+## 🧰 Tools & Modules
 
-### ✅ Implemented
+This repository is a collection of Rust-based security research tools and educational modules.  
+Each tool is self-contained with its own documentation and can be built independently.
 
-#### [🔍 Port Scanner](./tools/port_scanner/)
-High-performance asynchronous TCP port scanner with concurrent connection handling.
+| Module | Description | Status | Link |
+|--------|-------------|--------|------|
+| 🔐 **discord_audit_bot** | Security audit bot for Discord servers (Rust + Serenity) | ✅ Complete | [tools/discord_audit_bot](./tools/discord_audit_bot/) |
+| 🌐 **packet-match-fuzz** | Pattern-matching fuzzer for packet payloads using KMP algorithm | ✅ Complete | [tools/packet-match-fuzz](./tools/packet-match-fuzz/) |
+| 📡 **wifi_audit** | Passive Wi-Fi auditing tool (802.11 Beacon/Probe analysis, monitor mode) | ✅ Complete | [tools/wifi_audit](./tools/wifi_audit/) |
+| 🔑 **crypto** | Educational implementations of classical/symmetric/asymmetric ciphers & hashing | ✅ Complete | [research/crypto](./research/crypto/) |
+| 🛡️ **linux-kernel-exploits** | Educational CVE labs & write-ups for kernel exploitation research | ✅ Complete | [linux-kernel-exploits](./linux-kernel-exploits/) |
 
-**Features:**
-- Async TCP scanning using [Tokio](https://tokio.rs/)
-- Customizable concurrency levels and timeouts
-- Support for port ranges and individual port specification
-- Fast scanning modes for common ports
-- Detailed connection status reporting
+> ⚠️ **Important:** All tools are designed for **educational and authorized security testing only**. Always ensure proper authorization before use.
 
-**Usage:**
-```bash
-# Scan specific ports
-cargo run -p port_scanner -- 192.168.1.1 -p 22,80,443,8080
+### 🔐 Discord Security Audit Bot
 
-# Scan port range with high concurrency
-cargo run -p port_scanner -- example.com --range 1-1000 --fast
-
-# Custom timeout and concurrency
-cargo run -p port_scanner -- target.com -p 80,443 --timeout 3 --threads 100
-```
-
-#### [🤖 Discord Security Audit Bot](./tools/discord_audit_bot/)
 Automated Discord server security assessment and monitoring bot built with [Serenity](https://github.com/serenity-rs/serenity).
 
-**Features:**
-- Automated security audits for Discord servers
-- Manual security checks and assessments
-- Security checklist and best practices
-- Peer audit pairing system
-- Gamified security challenges
-- Real-time monitoring capabilities
+**Key Features:**
+- Automated security audits and vulnerability scanning
+- Manual security assessments and compliance checks
+- Security best practices checklist and recommendations
+- Real-time monitoring and alert capabilities
 
-**Setup:**
+**Quick Start:**
 ```bash
-# Create .env file with bot token
+# Set up bot token
 echo "DISCORD_TOKEN=your_bot_token_here" > tools/discord_audit_bot/.env
 
 # Run the bot
 cargo run -p discord_audit_bot
 ```
 
-**Commands:**
-- `!scan` - Full security audit
-- `!quickscan` - Basic security checks  
-- `!checklist` - Security best practices
-- `!history` - Recent audit reports
-- `!help` - Command documentation
+### 🌐 Packet Pattern Matcher & Fuzzer
+
+Advanced pattern matching tool for streaming packet data using the Knuth-Morris-Pratt (KMP) algorithm for network traffic analysis and security testing.
+
+**Features:**
+- High-performance pattern matching in network streams
+- Fuzzing capabilities for payload analysis
+- Real-time packet processing with async Rust
+
+### 📡 Wi-Fi Audit Tool
+
+Passive Wi-Fi network auditing tool for authorized penetration testing and security assessment.
+
+**Capabilities:**
+- 802.11 management frame analysis (Beacon/Probe Request/Response)
+- SSID inventory and BSSID mapping
+- Client device reconnaissance and probing analysis
+- Monitor mode packet capture with custom BPF filters
+
+**Usage:**
+```bash
+# Basic network discovery
+sudo cargo run -p wifi_audit -- --iface wlan0mon
+
+# With client monitoring
+sudo cargo run -p wifi_audit -- --iface wlan0mon --list-clients
+```
 
 ## 🚧 Research Modules
 
@@ -119,26 +128,32 @@ Advanced pattern matching tool for streaming packet data using the Knuth-Morris-
 
 ## 📁 Project Structure
 
-- **[tools/](./tools/)** — Individual security tools (Rust crates)
-  - **[port_scanner/](./tools/port_scanner/)** — ✅ Async TCP port scanner 
-  - **[discord_audit_bot/](./tools/discord_audit_bot/)** — ✅ Discord security audit bot
-  - **packet-match-fuzz/** — 🚧 KMP-based packet matching
-  - **hash_cracker/** — 📋 Password & hash cracking tool
-  - **log_analyzer/** — 📋 Security log analysis tool
-  - **web_fuzzer/** — 📋 Web directory/parameter fuzzer
-  - **packet_sniffer/** — 📋 Network packet sniffer
-- **[research/](./research/)** — Security research modules
-  - **[crypto/](./research/crypto/)** — ✅ Cryptographic algorithms
-  - **[merkle/](./research/merkle/)** — ✅ Merkle tree implementation
-  - **protocols/** — 🚧 Network protocol analysis
-  - **vulns/** — 📋 Vulnerability research & PoCs
-- **[docs/](./docs/)** — Documentation & learning resources
-  - **[learning_notes.md](./docs/learning_notes.md)**
-  - **[tool_usage.md](./docs/tool_usage.md)**
-  - **[references.md](./docs/references.md)**
-- **[examples/](./examples/)** — Example usage and test cases
-- **[LICENSE](./LICENSE)** — MIT License
-- **[README.md](./README.md)** — This file
+## 📁 Project Structure
+
+```
+sum-rust-secu-lab/
+├── tools/                   # Individual security tools (Rust crates)
+│   ├── discord_audit_bot/   # ✅ Discord security audit bot
+│   ├── packet-match-fuzz/   # ✅ KMP-based pattern matching & fuzzing
+│   ├── wifi_audit/          # ✅ Passive Wi-Fi auditing tool
+│   ├── hash_cracker/        # 📋 Password & hash cracking tool
+│   ├── log_analyzer/        # 📋 Security log analysis tool
+│   ├── web_fuzzer/          # 📋 Web directory/parameter fuzzer
+│   └── packet_sniffer/      # 📋 Network packet sniffer
+├── research/                # Security research modules
+│   ├── crypto/              # ✅ Cryptographic algorithms & implementations
+│   ├── merkle/              # ✅ Merkle tree implementation
+│   ├── protocols/           # 🚧 Network protocol analysis
+│   └── vulns/               # 📋 Vulnerability research & PoCs
+├── linux-kernel-exploits/   # ✅ Kernel exploitation labs & CVE research
+├── docs/                    # Documentation and learning resources
+│   ├── learning_notes.md    # Study notes and progress logs
+│   ├── tool_usage.md        # Detailed usage guides
+│   └── references.md        # Resources and references
+├── examples/                # Example usage and test cases
+├── LICENSE                  # MIT License
+└── README.md                # This file
+```
 
 **Legend:** ✅ Complete | 🚧 In Progress | 📋 Planned
 
