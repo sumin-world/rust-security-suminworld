@@ -8,6 +8,7 @@ use serenity::{
         guild::{ExplicitContentFilter, Guild, Member, MfaLevel, VerificationLevel},
         id::{ChannelId, GuildId, UserId},
         prelude::*,
+        prelude::{Presence, OnlineStatus},
     },
     prelude::*,
 };
@@ -1139,8 +1140,24 @@ impl EventHandler for Handler {
                 println!("Error sending help: {:?}", why);
             }
         }
-    } // <-- async fn message 닫힘
-} // <-- impl EventHandler for Handler 닫힘
+    }
+
+    async fn presence_update(&self, ctx: Context, new_data: Presence) {
+        let user_id = new_data.user.id;
+        if new_data.status == OnlineStatus::Online {
+            // 캐시에서 이름 조회 (없으면 ID로 대체)
+            let display = if let Some(u) = ctx.cache.user(user_id) {
+                u.name.clone()
+            } else {
+                format!("<@{}>", user_id.get())
+            };
+
+            let msg = format!("🔔 {} 님이 온라인으로 전환했습니다!", display);
+            let log_ch = STATE.read().await.log_channel;
+            log_embed(&ctx, log_ch, "Presence Update", &msg).await;
+        }
+    }
+}
 
 // =====================
 // main
@@ -1157,6 +1174,7 @@ async fn main() {
 
     let intents = GatewayIntents::GUILDS
         | GatewayIntents::GUILD_MEMBERS
+        | GatewayIntents::GUILD_PRESENCES
         | GatewayIntents::GUILD_MODERATION
         | GatewayIntents::GUILD_MESSAGES
         | GatewayIntents::MESSAGE_CONTENT;
