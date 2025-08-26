@@ -4,7 +4,7 @@ members = [
   "tools/packet-match-fuzz",
   "tools/discord_audit_bot",
   "research/crypto",
-  "research/merkle",
+  "research/merkle", "tools/wifi_audit",
 ]
 resolver = "2"
 
