@@ -29,3 +29,14 @@
 *.env
 .env
 tools/discord_audit_bot/.env
+# Python venv
+.venv/
+# Rust/C build artifacts
+/target/
+/**/target/
+/poCs/cache/flush_reload_attacker
+/poCs/cache/flush_reload_attacker_csv
+/poCs/cache/victim_sim
+# local env files
+.env
+tools/discord_audit_bot/.env
