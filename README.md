@@ -40,6 +40,13 @@ Each tool is self-contained with its own documentation and can be built independ
 | 📡 **wifi_audit** | Passive Wi-Fi auditing tool (802.11 Beacon/Probe analysis, monitor mode) | ✅ Complete | [tools/wifi_audit](./tools/wifi_audit/) |
 | 🔑 **crypto** | Educational implementations of classical/symmetric/asymmetric ciphers & hashing | ✅ Complete | [research/crypto](./research/crypto/) |
 | 🛡️ **linux-kernel-exploits** | Educational CVE labs & write-ups for kernel exploitation research | ✅ Complete | [linux-kernel-exploits](./linux-kernel-exploits/) |
+| 🌳 **merkle** | Efficient Merkle hash tree implementation using SHA-256 | ✅ Complete | [research/merkle](./research/merkle/) |
+| 🚧 **protocols** | Network protocol analysis (in development) | 🚧 In Progress | [research/protocols](./research/protocols/) |
+| 📋 **vulns** | Vulnerability research & proofs of concept (planned) | 📋 Planned | [research/vulns](./research/vulns/) |
+| 📋 **hash_cracker** | Multi-algorithm password cracking tool | 📋 Planned | [tools/hash_cracker](./tools/hash_cracker/) |
+| 📋 **log_analyzer** | Security log correlation and anomaly detection | 📋 Planned | [tools/log_analyzer](./tools/log_analyzer/) |
+| 📋 **web_fuzzer** | Web directory/parameter fuzzer | 📋 Planned | [tools/web_fuzzer](./tools/web_fuzzer/) |
+| 📋 **packet_sniffer** | Network packet sniffer | 📋 Planned | [tools/packet_sniffer](./tools/packet_sniffer/) |
 
 > ⚠️ **Important:** All tools are designed for **educational and authorized security testing only**. Always ensure proper authorization before use.
 
@@ -151,6 +158,8 @@ rust-security-suminworld/
 │   ├── protocols/           # 🚧 Network protocol analysis
 │   └── vulns/               # 📋 Vulnerability research & PoCs
 ├── linux-kernel-exploits/   # ✅ Kernel exploitation labs & CVE research
+├── PoCs/                    # Proof-of-concepts for attacks (e.g., cache side channels)
+│   └── cache/               # Flush+Reload timing attack PoC (C code)
 ├── docs/                    # Documentation and learning resources
 │   ├── learning_notes.md    # Study notes and progress logs
 │   ├── tool_usage.md        # Detailed usage guides
@@ -234,6 +243,90 @@ cargo run -p packet-match-fuzz -- --pattern "HTTP" --input sample.pcap
 ```bash
 cargo run -p crypto --example demo
 ```
+
+## 🔎 Side-Channel Research — Flush+Reload (Cache) PoC
+
+**Warning:** The experimental code in this section is for educational purposes only and must be executed exclusively in a local virtual machine or dedicated experimental equipment, and only in environments with explicit authorization.
+
+Side-channel attacks are techniques that infer secrets from incidental information such as computation time, power consumption, or cache behavior. This repository includes a PoC of **Flush+Reload**, a representative cache-based attack technique. Flush+Reload is a high-resolution, low-noise attack targeting the L3 cache that can determine whether specific memory lines have been accessed, without requiring the attacker and victim to share the same CPU core. This PoC consists of C code located in the `PoCs/cache/` directory.
+
+### Overview
+
+- **Victim Program**: A simulator that repeatedly accesses specific memory indices
+- **Attacker Program**: Uses `clflush` and `rdtscp` to measure memory access times, distinguishing cache hits from misses
+- **Execution Script**: Runs the victim in the background, saves attacker results to CSV, then terminates the victim
+
+### Running the Experiment
+
+```bash
+# Run victim process in background
+./PoCs/cache/victim_sim &
+VICTIM_PID=$!
+
+# Run attacker and save to CSV
+./PoCs/cache/flush_reload_attacker > /tmp/flush_reload_data.csv
+
+# Terminate victim process
+kill $VICTIM_PID
+```
+
+### Data Format and Interpretation
+
+The CSV format is `iter,cycles` where small values (~1,000 cycles) indicate cache hits and large values (hundreds of thousands of cycles) indicate cache misses or interrupt/context switches.
+
+**Sample Output:**
+```csv
+iter,cycles
+0,158000
+1,1000
+2,1000
+3,155000
+4,1000
+...
+```
+
+Measurements typically form two distinct clusters:
+- **Low latency cluster**: Cache hits (victim accessed the memory, data in cache)
+- **High latency cluster**: Cache misses or interrupts/context switches
+
+### Analysis Examples
+
+**Statistics:**
+```bash
+# Count samples
+wc -l /tmp/flush_reload_data.csv
+
+# Calculate mean
+awk -F, 'NR>1{n++; sum+=$2} END{print "Samples:", n, "Mean:", sum/n}' /tmp/flush_reload_data.csv
+```
+
+**Visualization (Python):**
+```python
+import csv, numpy as np
+import matplotlib.pyplot as plt
+
+xs = []
+with open('/tmp/flush_reload_data.csv') as f:
+    r = csv.reader(f)
+    next(r)
+    for _, c in r:
+        xs.append(int(c))
+
+xs = np.array(xs)
+plt.hist(xs, bins=200, log=True)
+plt.xlabel('Cycles')
+plt.ylabel('Count (log scale)')
+plt.title('Flush+Reload Distribution')
+plt.yscale('log')
+plt.show()
+```
+
+### Security Implications
+
+Flush+Reload can be exploited for practical attacks such as tracking AES S-box accesses to extract cryptographic keys. Therefore, defensive techniques should be applied to reduce side-channel leakage, including:
+- Constant-time implementations
+- Cache partitioning (e.g., Intel CAT)
+- Memory access pattern obfuscation
 
 ## 🛣️ Roadmap
 
