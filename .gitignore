@@ -1,23 +1,29 @@
-# Rust build artifacts
-/target
-**/*.rs.bk
-
-# Environment files
-.env
-.env.*
-
-# IDE / Editor
-.vscode/
-.idea/
-*.swp
-*.swo
+# Rust
+/target/
+/**/target/
+/Cargo.lock
 
 # macOS
 .DS_Store
 
-# Windows
-Thumbs.db
-desktop.ini
+# VSCode
+.vscode/
 
-# Logs
+# build artifacts
+*.o
+*.out
+*.exe
+*.so
+*.dylib
+
+# logs
 *.log
+
+# temp
+*.tmp
+
+# Environment files
+.env
+*.env
+.env
+*.env

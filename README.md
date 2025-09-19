@@ -395,3 +395,7 @@ The authors assume **no liability** for misuse of the provided tools. Users are 
 <a href="https://github.com/sumin-world/rust-security-suminworld/issues">Issues</a> • 
 <a href="https://github.com/sumin-world/rust-security-suminworld/releases">Releases</a>
 </div>
+
+---
+
+> ⚠️ See docs/LEGAL_NOTICE.md for legal and ethical guidance. Run experiments only on hardware you own or have explicit permission to test.
