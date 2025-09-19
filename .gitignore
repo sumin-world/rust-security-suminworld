@@ -27,3 +27,5 @@
 *.env
 .env
 *.env
+.env
+tools/discord_audit_bot/.env
