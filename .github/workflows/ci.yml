@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Rust
-        uses: dtolnay/rust-toolchain-action@stable
+        uses: dtolnay/rust-toolchain@stable
       - name: Build workspace (if present)
         run: cargo build --workspace --all-targets --release || true
       - name: Format check
