@@ -21,22 +21,31 @@
 
 # temp
 *.tmp
+*.swp
+*.swo
+*~
+*.bak
 
 # Environment files
 .env
 *.env
-.env
-*.env
-.env
 tools/discord_audit_bot/.env
+
 # Python venv
 .venv/
+
 # Rust/C build artifacts
-/target/
-/**/target/
-/poCs/cache/flush_reload_attacker
-/poCs/cache/flush_reload_attacker_csv
-/poCs/cache/victim_sim
-# local env files
-.env
-tools/discord_audit_bot/.env
+/PoCs/cache/flush_reload_attacker
+/PoCs/cache/flush_reload_attacker_csv
+/PoCs/cache/victim_sim
+
+# Rust kernel features research
+research/rust-kernel-features-study/target/
+research/kernel-features/target/
+
+# IDE specific
+.idea/
+*.iml
+
+# Linux
+.directory

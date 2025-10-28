@@ -5,6 +5,7 @@ members = [
   "tools/discord_audit_bot",
   "research/crypto",
   "research/merkle", "tools/wifi_audit",
+  "research/kernel-features",
 ]
 resolver = "2"
 
