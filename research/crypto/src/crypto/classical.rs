@@ -57,7 +57,11 @@ impl VigenereCipher {
                 let is_lower = c.is_ascii_lowercase();
                 let up = c.to_ascii_uppercase() as u8;
                 let enc = ((up - b'A' + shift) % 26) + b'A';
-                out.push(if is_lower { (enc + 32) as char } else { enc as char });
+                out.push(if is_lower {
+                    (enc + 32) as char
+                } else {
+                    enc as char
+                });
                 i += 1;
             } else {
                 out.push(c);
@@ -75,12 +79,63 @@ impl VigenereCipher {
                 let is_lower = c.is_ascii_lowercase();
                 let up = c.to_ascii_uppercase() as u8;
                 let dec = ((up - b'A' + 26 - shift) % 26) + b'A';
-                out.push(if is_lower { (dec + 32) as char } else { dec as char });
+                out.push(if is_lower {
+                    (dec + 32) as char
+                } else {
+                    dec as char
+                });
                 i += 1;
             } else {
                 out.push(c);
             }
         }
         out
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn caesar_encrypt_decrypt_roundtrip() {
+        let cipher = CaesarCipher::new(13);
+        let plain = "Hello, World!";
+        let enc = cipher.encrypt(plain);
+        assert_eq!(cipher.decrypt(&enc), plain);
+    }
+
+    #[test]
+    fn caesar_known_vector() {
+        let cipher = CaesarCipher::new(3);
+        assert_eq!(cipher.encrypt("ABC"), "DEF");
+        assert_eq!(cipher.encrypt("xyz"), "abc");
+    }
+
+    #[test]
+    fn caesar_preserves_non_alpha() {
+        let cipher = CaesarCipher::new(5);
+        assert_eq!(cipher.encrypt("123!@#"), "123!@#");
+    }
+
+    #[test]
+    fn vigenere_encrypt_decrypt_roundtrip() {
+        let cipher = VigenereCipher::new("SECRET");
+        let plain = "Attack at dawn!";
+        let enc = cipher.encrypt(plain);
+        assert_eq!(cipher.decrypt(&enc), plain);
+    }
+
+    #[test]
+    fn vigenere_known_vector() {
+        let cipher = VigenereCipher::new("KEY");
+        let enc = cipher.encrypt("HELLO");
+        assert_eq!(enc, "RIJVS");
+    }
+
+    #[test]
+    #[should_panic(expected = "at least one alphabetic")]
+    fn vigenere_empty_key_panics() {
+        VigenereCipher::new("123");
     }
 }

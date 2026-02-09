@@ -22,7 +22,7 @@ pub fn open(iface: &str, filter: &str) -> Result<Cap, CaptureError> {
         .open()?;
 
     // 👇 setnonblock()는 self를 consume 하므로, 반드시 재대입해야 함
-    cap = cap.setnonblock()?; 
+    cap = cap.setnonblock()?;
 
     cap.filter(filter, true)?;
     Ok(Cap { cap })

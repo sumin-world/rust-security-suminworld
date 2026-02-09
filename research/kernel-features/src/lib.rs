@@ -1,10 +1,10 @@
 //! Rust for Linux 핵심 기능 학습 라이브러리
-//! 
+//!
 //! 이 라이브러리는 Rust로 리눅스 커널을 개발하는데 필요한
 //! 핵심 언어 기능들을 학습하기 위한 예제와 유틸리티를 제공합니다.
 
-use std::pin::Pin;
 use std::marker::PhantomPinned;
+use std::pin::Pin;
 
 /// 간단한 데이터 구조체 예제
 #[derive(Debug, Clone)]
@@ -28,17 +28,17 @@ impl SelfReferential {
             pointer: std::ptr::null(),
             _pin: PhantomPinned,
         });
-        
+
         // SAFETY: 이제 이동하지 않을 것이므로 안전
         let self_ptr: *const String = &boxed.data;
         unsafe {
             let mut_ref = Pin::as_mut(&mut boxed);
             Pin::get_unchecked_mut(mut_ref).pointer = self_ptr;
         }
-        
+
         boxed
     }
-    
+
     pub fn get_data(&self) -> &str {
         &self.data
     }
@@ -53,7 +53,7 @@ impl<T> RcuProtected<T> {
     pub fn new(data: T) -> Self {
         Self { data }
     }
-    
+
     /// RCU read-side critical section
     pub fn read<F, R>(&self, f: F) -> R
     where
@@ -104,7 +104,7 @@ impl<T> CustomPtr<T> {
             inner: Box::new(value),
         }
     }
-    
+
     pub fn get(&self) -> &T {
         &self.inner
     }
@@ -113,7 +113,7 @@ impl<T> CustomPtr<T> {
 // Deref 트레이트 구현으로 자동 역참조 지원
 impl<T> std::ops::Deref for CustomPtr<T> {
     type Target = T;
-    
+
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
@@ -151,6 +151,6 @@ mod tests {
     fn test_large_struct_size() {
         let size = LargeStruct::size_in_bytes();
         println!("LargeStruct size: {} bytes", size);
-        assert!(size > 4096); // 4KB 이상
+        assert!(size >= 4096); // 4KB 이상
     }
 }

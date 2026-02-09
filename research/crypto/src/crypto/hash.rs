@@ -16,7 +16,10 @@ pub struct HashChain {
 
 impl HashChain {
     pub fn new(reduction: fn(u32, usize) -> String) -> Self {
-        Self { chain: Vec::new(), reduction }
+        Self {
+            chain: Vec::new(),
+            reduction,
+        }
     }
 
     pub fn generate_chain(&mut self, start_password: &str, length: usize) {
@@ -42,5 +45,35 @@ impl HashChain {
             }
         }
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn fnv1a_deterministic() {
+        let h1 = simple_hash(b"hello");
+        let h2 = simple_hash(b"hello");
+        assert_eq!(h1, h2);
+    }
+
+    #[test]
+    fn fnv1a_different_inputs() {
+        assert_ne!(simple_hash(b"hello"), simple_hash(b"world"));
+    }
+
+    #[test]
+    fn hash_chain_lookup_finds_start() {
+        let reduction =
+            |h: u32, _i: usize| -> String { format!("{:08x}", h).chars().take(4).collect() };
+        let mut chain = HashChain::new(reduction);
+        chain.generate_chain("pass", 5);
+        assert!(!chain.chain.is_empty());
+
+        let target = simple_hash(b"pass");
+        let found = chain.lookup(target);
+        assert_eq!(found, Some("pass".to_string()));
     }
 }

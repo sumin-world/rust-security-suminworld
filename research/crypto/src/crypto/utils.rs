@@ -29,7 +29,7 @@ pub fn bytes_to_hex(data: &[u8]) -> String {
 /// 헥스(공백없음) -> 바이트
 pub fn hex_to_bytes(s: &str) -> CryptoResult<Vec<u8>> {
     let s = s.trim();
-    if s.len() % 2 != 0 {
+    if !s.len().is_multiple_of(2) {
         return Err(CryptoError("hex length must be even".into()));
     }
     let mut out = Vec::with_capacity(s.len() / 2);
@@ -69,4 +69,42 @@ pub fn gen_random_biguint(bits: usize) -> BigUint {
         cand.set_bit((bits - 1) as u64, true);
     }
     cand
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn bytes_to_hex_and_back() {
+        let data = vec![0xDE, 0xAD, 0xBE, 0xEF];
+        let hex = bytes_to_hex(&data);
+        assert_eq!(hex, "deadbeef");
+        let back = hex_to_bytes(&hex).unwrap();
+        assert_eq!(back, data);
+    }
+
+    #[test]
+    fn hex_to_bytes_odd_length() {
+        assert!(hex_to_bytes("abc").is_err());
+    }
+
+    #[test]
+    fn entropy_of_uniform() {
+        // All distinct bytes → high entropy
+        let data: Vec<u8> = (0..=255).collect();
+        let e = calculate_entropy(&data);
+        assert!((e - 8.0).abs() < 0.01, "expected ~8.0, got {e}");
+    }
+
+    #[test]
+    fn entropy_of_constant() {
+        let data = vec![0u8; 100];
+        assert_eq!(calculate_entropy(&data), 0.0);
+    }
+
+    #[test]
+    fn entropy_empty() {
+        assert_eq!(calculate_entropy(&[]), 0.0);
+    }
 }

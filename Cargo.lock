@@ -1070,7 +1070,6 @@ checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 name = "merkle"
 version = "0.1.0"
 dependencies = [
- "hex",
  "sha2",
 ]
 
@@ -1184,6 +1183,9 @@ checksum = "a4895175b425cb1f87721b59f0f286c2092bd4af812243672510e1ac53e2e0ad"
 [[package]]
 name = "packet-match-fuzz"
 version = "0.1.0"
+dependencies = [
+ "rand",
+]
 
 [[package]]
 name = "parking_lot"
@@ -2394,7 +2396,6 @@ dependencies = [
  "clap",
  "comfy-table",
  "macaddr",
- "parking_lot",
  "pcap",
  "thiserror",
 ]

@@ -3,7 +3,8 @@ name = "port_scanner"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
+description = "High-performance async TCP port scanner"
 
 [dependencies]
-clap = { version = "4.5.41", features = ["derive"] }
-tokio = { version = "1", features = ["full"] }
+clap.workspace = true
+tokio.workspace = true

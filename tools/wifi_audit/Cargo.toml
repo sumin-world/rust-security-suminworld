@@ -1,22 +1,16 @@
 [package]
 name = "wifi_audit"
-version = "0.1.0"
-edition = "2021"
-authors = ["suminworld"]
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
 description = "Passive Wi-Fi auditing tool (authorized networks only)"
-license = "MIT"
+license.workspace = true
 
 [dependencies]
-anyhow = "1"
-thiserror = "1"
-clap = { version = "4", features = ["derive"] }
+anyhow.workspace = true
+thiserror.workspace = true
+clap.workspace = true
+chrono.workspace = true
 pcap = "1"
 comfy-table = "7"
-chrono = { version = "0.4", features = ["clock"] }
 macaddr = "1"
-parking_lot = "0.12"
-
-[profile.release]
-codegen-units = 1
-lto = true
-strip = true

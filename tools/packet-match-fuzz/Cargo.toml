@@ -3,7 +3,7 @@ name = "packet-match-fuzz"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
-description = "KMP-based packet matcher with streaming support."
+description = "KMP-based packet pattern matcher with streaming support and fuzzing utilities"
 
 [dependencies]
-# 필요시 dev-deps 등 추가
+rand = "0.8"

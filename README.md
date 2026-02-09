@@ -2,493 +2,343 @@
 
 [![Rust](https://img.shields.io/badge/language-Rust-orange.svg)](https://www.rust-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/sumin-world/rust-security-suminworld/actions/workflows/ci.yml/badge.svg)](https://github.com/sumin-world/rust-security-suminworld/actions)
 [![GitHub last commit](https://img.shields.io/github/last-commit/sumin-world/rust-security-suminworld)](https://github.com/sumin-world/rust-security-suminworld/commits/main)
 [![GitHub stars](https://img.shields.io/github/stars/sumin-world/rust-security-suminworld?style=social)](https://github.com/sumin-world/rust-security-suminworld/stargazers)
 
-> **Rust-based Security Research Lab**  
-> Passive Wi-Fi auditing, packet fuzzing, Discord security bots, and educational crypto & kernel exploit modules.
-
-> A comprehensive collection of Rust-based cybersecurity tools and research projects designed for learning and demonstrating security concepts. This repository showcases Rust's capabilities in building high-performance, memory-safe security applications.
+> **Rust-based Security Research Lab** — Passive Wi-Fi auditing, packet fuzzing, Discord security bots, cryptography toolkit, and kernel-level research, all written in safe, high-performance Rust.
 
 ---
 
-## 🔖 Topics / Tags
-`rust` · `security` · `cybersecurity` · `wifi` · `wireless-security` ·  
-`penetration-testing` · `80211` · `pcap` · `rust-security` · `passive-monitoring`
+## 🔖 Topics
+
+`rust` · `security` · `cybersecurity` · `wifi` · `wireless-security` · `penetration-testing` · `802.11` · `pcap` · `cryptography` · `merkle-tree` · `fuzzing` · `discord-bot`
+
+---
 
 ## 🎯 Overview
 
-**rust-security-suminworld** is a comprehensive collection of Rust-based cybersecurity tools and research projects designed for learning and demonstrating security concepts. This repository showcases Rust's capabilities in building high-performance, memory-safe security applications.
+**rust-security-suminworld** is a Cargo workspace containing practical security tools and educational research modules. Every crate compiles with **zero warnings**, passes **`cargo clippy`** cleanly, and ships with unit + integration tests (**64 tests** total).
 
-### 🌟 Key Features
+### Highlights
 
-- **High Performance**: Leverages Rust's zero-cost abstractions and async capabilities
-- **Memory Safety**: Eliminates common security vulnerabilities through Rust's ownership system  
-- **Concurrent Processing**: Utilizes Tokio for high-performance async operations
-- **Educational Focus**: Comprehensive documentation and learning resources
-- **Modular Architecture**: Clean separation of tools, research, and documentation
+| | |
+|---|---|
+| 🚀 **High Performance** | Async I/O via Tokio, zero-cost abstractions |
+| 🛡️ **Memory Safe** | Ownership & borrowing eliminate buffer overflows and use-after-free |
+| 🧪 **Well Tested** | 64 tests across all workspace members |
+| 📐 **Clean Code** | 0 compiler warnings, 0 clippy lints, `cargo fmt` enforced |
+| 🧩 **Modular** | Each tool is an independent crate — build and run individually |
 
-## 🧰 Tools & Modules
+---
 
-This repository is a collection of Rust-based security research tools and educational modules.  
-Each tool is self-contained with its own documentation and can be built independently.
+## 📦 Workspace Members
 
-| Module | Description | Status | Link |
-|--------|-------------|--------|------|
-| 🔐 **discord_audit_bot** | Security audit bot for Discord servers (Rust + Serenity) | ✅ Complete | [tools/discord_audit_bot](./tools/discord_audit_bot/) |
-| 🌐 **packet-match-fuzz** | Pattern-matching fuzzer for packet payloads using KMP algorithm | ✅ Complete | [tools/packet-match-fuzz](./tools/packet-match-fuzz/) |
-| 📡 **wifi_audit** | Passive Wi-Fi auditing tool (802.11 Beacon/Probe analysis, monitor mode) | ✅ Complete | [tools/wifi_audit](./tools/wifi_audit/) |
-| 🔑 **crypto** | Educational implementations of classical/symmetric/asymmetric ciphers & hashing | ✅ Complete | [research/crypto](./research/crypto/) |
-| 🛡️ **linux-kernel-exploits** | Educational CVE labs & write-ups for kernel exploitation research | ✅ Complete | [linux-kernel-exploits](./linux-kernel-exploits/) |
-| 🌳 **merkle** | Efficient Merkle hash tree implementation using SHA-256 | ✅ Complete | [research/merkle](./research/merkle/) |
-| 🚧 **protocols** | Network protocol analysis (in development) | 🚧 In Progress | [research/protocols](./research/protocols/) |
-| 📋 **vulns** | Vulnerability research & proofs of concept (planned) | 📋 Planned | [research/vulns](./research/vulns/) |
-| 📋 **hash_cracker** | Multi-algorithm password cracking tool | 📋 Planned | [tools/hash_cracker](./tools/hash_cracker/) |
-| 📋 **log_analyzer** | Security log correlation and anomaly detection | 📋 Planned | [tools/log_analyzer](./tools/log_analyzer/) |
-| 📋 **web_fuzzer** | Web directory/parameter fuzzer | 📋 Planned | [tools/web_fuzzer](./tools/web_fuzzer/) |
-| 📋 **packet_sniffer** | Network packet sniffer | 📋 Planned | [tools/packet_sniffer](./tools/packet_sniffer/) |
+| Crate | Type | Description |
+|-------|------|-------------|
+| [`port_scanner`](./tools/port_scanner/) | 🔧 Tool | High-performance async TCP port scanner (Tokio + Semaphore) |
+| [`discord_audit_bot`](./tools/discord_audit_bot/) | 🔧 Tool | Discord server security audit bot (Serenity) |
+| [`packet-match-fuzz`](./tools/packet-match-fuzz/) | 🔧 Tool | KMP pattern matcher & mutation fuzzer for packet payloads |
+| [`wifi_audit`](./tools/wifi_audit/) | 🔧 Tool | Passive 802.11 Wi-Fi auditor (Beacon / Probe analysis) |
+| [`crypto`](./research/crypto/) | 🔬 Research | Educational cryptography: Caesar, Vigenère, XOR, Feistel, RSA, FNV-1a |
+| [`merkle`](./research/merkle/) | 🔬 Research | SHA-256 Merkle tree with domain-separated hashing & inclusion proofs |
+| [`kernel-features`](./research/kernel-features/) | 🔬 Research | Rust-for-Linux language features study (Field Projection, In-place Init, Arbitrary Self Types) |
 
-> ⚠️ **Important:** All tools are designed for **educational and authorized security testing only**. Always ensure proper authorization before use.
+> ⚠️ **All tools are for educational and authorized security testing only.**
 
-### 🔐 Discord Security Audit Bot
-
-Automated Discord server security assessment and monitoring bot built with [Serenity](https://github.com/serenity-rs/serenity).
-
-**Key Features:**
-- Automated security audits and vulnerability scanning
-- Manual security assessments and compliance checks
-- Security best practices checklist and recommendations
-- Real-time monitoring and alert capabilities
-
-**Quick Start:**
-```bash
-# Set up bot token
-echo "DISCORD_TOKEN=your_bot_token_here" > tools/discord_audit_bot/.env
-
-# Run the bot
-cargo run -p discord_audit_bot
-```
-
-### 🌐 Packet Pattern Matcher & Fuzzer
-
-Advanced pattern matching tool for streaming packet data using the Knuth-Morris-Pratt (KMP) algorithm for network traffic analysis and security testing.
-
-**Features:**
-- High-performance pattern matching in network streams
-- Fuzzing capabilities for payload analysis
-- Real-time packet processing with async Rust
-
-### 📡 Wi-Fi Audit Tool
-
-Passive Wi-Fi network auditing tool for authorized penetration testing and security assessment.
-
-**Capabilities:**
-- 802.11 management frame analysis (Beacon/Probe Request/Response)
-- SSID inventory and BSSID mapping
-- Client device reconnaissance and probing analysis
-- Monitor mode packet capture with custom BPF filters
-
-**Usage:**
-```bash
-# Basic network discovery
-sudo cargo run -p wifi_audit -- --iface wlan0mon
-
-# With client monitoring
-sudo cargo run -p wifi_audit -- --iface wlan0mon --list-clients
-```
-
-## 🚧 Research Modules
-
-### [🔐 Cryptography Toolkit](./research/crypto/)
-Educational implementations of cryptographic algorithms in Rust.
-
-**Implemented:**
-- **Classical Ciphers**: Caesar cipher, Vigenère cipher
-- **Modern Ciphers**: XOR cipher, basic Feistel network
-- **Asymmetric Crypto**: Basic RSA implementation
-- **Hash Functions**: FNV-1a based hash, hash chaining
-- **Utilities**: Key generation, padding schemes
-
-**Example:**
-```bash
-cargo run -p crypto --example demo
-```
-
-### [🌳 Merkle Tree Library](./research/merkle/)
-Efficient Merkle hash tree implementation using SHA-256 for data integrity verification.
-
-**Features:**
-- Tree construction and management
-- Inclusion proof generation
-- Proof verification for data integrity
-- Membership validation
-- Optimized for performance
-
-**Usage:**
-```bash
-cargo test -p merkle
-```
-
-### 🔬 In Development
-
-#### [🎯 Packet Pattern Matcher](./tools/packet-match-fuzz/)
-Advanced pattern matching tool for streaming packet data using the Knuth-Morris-Pratt (KMP) algorithm.
-
-**Planned Features:**
-- Real-time packet stream analysis
-- Pattern matching in network traffic
-- Fuzzing pattern detection
-- Performance-optimized streaming algorithms
-
-## 📁 Project Structure
-
-```
-rust-security-suminworld/
-├── tools/                   # Individual security tools (Rust crates)
-│   ├── discord_audit_bot/   # ✅ Discord security audit bot
-│   ├── packet-match-fuzz/   # ✅ KMP-based pattern matching & fuzzing
-│   ├── wifi_audit/          # ✅ Passive Wi-Fi auditing tool
-│   ├── hash_cracker/        # 📋 Password & hash cracking tool
-│   ├── log_analyzer/        # 📋 Security log analysis tool
-│   ├── web_fuzzer/          # 📋 Web directory/parameter fuzzer
-│   └── packet_sniffer/      # 📋 Network packet sniffer
-├── research/                # Security research modules
-│   ├── crypto/              # ✅ Cryptographic algorithms & implementations
-│   ├── merkle/              # ✅ Merkle tree implementation
-│   ├── protocols/           # 🚧 Network protocol analysis
-│   └── vulns/               # 📋 Vulnerability research & PoCs
-├── linux-kernel-exploits/   # ✅ Kernel exploitation labs & CVE research
-├── PoCs/                    # Proof-of-concepts for attacks (e.g., cache side channels)
-│   └── cache/               # Flush+Reload timing attack PoC (C code)
-├── docs/                    # Documentation and learning resources
-│   ├── learning_notes.md    # Study notes and progress logs
-│   ├── tool_usage.md        # Detailed usage guides
-│   └── references.md        # Resources and references
-├── examples/                # Example usage and test cases
-├── LICENSE                  # MIT License
-└── README.md                # This file
-```
-
-**Legend:** ✅ Complete | 🚧 In Progress | 📋 Planned
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Rust**: Install via [rustup](https://rustup.rs/) (2021 edition or later)
-- **System Dependencies**: 
+- **Rust ≥ 1.75** — install via [rustup](https://rustup.rs/)
+- **libpcap** (for `wifi_audit`):
   ```bash
-  # Ubuntu/Debian (for Wi-Fi tools)
+  # Ubuntu / Debian
   sudo apt install -y libpcap-dev build-essential
-  
   # macOS
   brew install libpcap
   ```
-- **Hardware**: USB Wi-Fi adapter for monitor mode (optional, for wifi_audit)
 
-### Installation
+### Build & Test
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/sumin-world/rust-security-suminworld.git
-   cd rust-security-suminworld
-   ```
-
-2. **Build all tools**
-   ```bash
-   cargo build --release
-   ```
-
-3. **Build specific tool**
-   ```bash
-   cargo build -p discord_audit_bot --release
-   cargo build -p wifi_audit --release
-   cargo build -p packet-match-fuzz --release
-   ```
-
-### Running Tools
-
-#### Discord Security Bot
 ```bash
-# Set up environment
-cd tools/discord_audit_bot
-echo "DISCORD_TOKEN=your_token" > .env
+git clone https://github.com/sumin-world/rust-security-suminworld.git
+cd rust-security-suminworld
 
-# Run bot
-cargo run -p discord_audit_bot
+# Build everything
+cargo build --release
+
+# Run all 64 tests
+cargo test
+
+# Lint check (should produce 0 warnings)
+cargo clippy --all-targets
 ```
 
-#### Wi-Fi Auditing
-```bash
-# Setup monitor mode
-sudo airmon-ng start wlan0  # Creates wlan0mon
+### Run Individual Tools
 
-# Basic audit
+```bash
+# Port scanner
+cargo run -p port_scanner -- 192.168.1.1 --range 1-1024 --fast
+
+# Discord bot (set token first)
+cp .env.example tools/discord_audit_bot/.env   # then fill in DISCORD_TOKEN
+cargo run -p discord_audit_bot
+
+# Wi-Fi audit (requires monitor mode + root)
 sudo cargo run -p wifi_audit -- --iface wlan0mon
 
-# With client monitoring
+# Crypto demo (Caesar, Vigenère, XOR, Feistel, FNV, entropy)
+cargo run -p research-crypto --example demo
+
+# Packet fuzzing library
+cargo test -p packet-match-fuzz
+```
+
+---
+
+## 🔧 Tools
+
+### Port Scanner
+
+Async TCP port scanner using Tokio with configurable concurrency and timeout.
+
+```bash
+# Scan common ports
+cargo run -p port_scanner -- scanme.nmap.org -p 22,80,443
+
+# Fast scan (top 1024 ports, 1024 concurrent, 200ms timeout)
+cargo run -p port_scanner -- 10.0.0.1 --fast
+```
+
+**Tests:** 19 unit tests covering `parse_range`, `parse_ports_list`, `dedup_sort`, `preview_ports`.
+
+### Discord Audit Bot
+
+Modular Discord security bot built with [Serenity](https://github.com/serenity-rs/serenity). Refactored from a single 1,191-line file into five clean modules:
+
+| Module | Responsibility |
+|--------|---------------|
+| `main.rs` | Entry point & Serenity client setup |
+| `models.rs` | `SecurityReport`, `SecurityLevel`, `AppState` structs |
+| `scanner.rs` | `SecurityScanner` — audit logic & report formatting |
+| `handler.rs` | `EventHandler` — Discord command dispatch |
+| `helpers.rs` | Embed builders, `account_age_days` utility |
+
+### Packet-Match-Fuzz
+
+Full KMP-based pattern-matching and mutation-fuzzing library for packet payloads:
+
+| Module | Purpose |
+|--------|---------|
+| `kmp.rs` | KMP string matcher — `find_all`, `find_first`, `contains` |
+| `stream.rs` | Streaming matcher that retains state across packet chunks |
+| `fuzz.rs` | Mutation fuzzer (BitFlip, ByteReplace, ByteInsert, ByteDelete, ChunkShuffle) |
+
+**Tests:** 15 unit tests + 1 doc-test.
+
+### Wi-Fi Audit
+
+Passive 802.11 auditing tool — captures Beacon frames, Probe Requests, and Probe Responses via `libpcap` in monitor mode.
+
+```bash
 sudo cargo run -p wifi_audit -- --iface wlan0mon --list-clients
 ```
 
-#### Packet Pattern Fuzzing
+---
+
+## 🔬 Research
+
+### Cryptography Toolkit (`research/crypto`)
+
+Educational implementations with comprehensive tests:
+
+| Module | Algorithms |
+|--------|-----------|
+| `classical.rs` | Caesar cipher, Vigenère cipher |
+| `symmetric.rs` | XOR cipher, Feistel network |
+| `asymmetric.rs` | RSA (Miller–Rabin, modular exponentiation) |
+| `hash.rs` | FNV-1a hash, hash-chain with reduction |
+| `utils.rs` | Hex encoding, Shannon entropy, random BigUint |
+
+**Tests:** 18 unit tests. **Demo:** `cargo run -p research-crypto --example demo`
+
+### Merkle Tree (`research/merkle`)
+
+SHA-256 Merkle tree with **domain-separated hashing** (leaf `0x00` prefix vs internal `0x01` prefix) for second-preimage resistance.
+
+- `from_leaves()` — build from arbitrary byte slices
+- `root()` — get the 32-byte root hash
+- `proof(index)` — generate inclusion proof
+- `verify(root, leaf, proof, index)` — static verification
+- `leaf_count()` — number of leaves
+
+**Tests:** 7 tests (4 unit + 3 integration).
+
+### Kernel Features Study (`research/kernel-features`)
+
+Executable examples exploring Rust language features needed for Linux kernel development:
+
+| Example | Feature |
+|---------|---------|
+| `field_projection` | Struct field projection through smart pointers |
+| `inplace_init` | In-place initialization (avoiding large stack copies) |
+| `smart_pointers` | Arbitrary self types for custom smart pointers |
+| `limitations` | Current limitations & development timeline |
+
+**Tests:** 4 unit tests. **Docs:** [`research/kernel-features/docs/`](./research/kernel-features/docs/)
+
+---
+
+## 🔎 Side-Channel Research — Flush+Reload PoC
+
+> ⚠️ **Educational only.** Run exclusively on hardware you own.
+
+The `poCs/cache/` directory contains a C-based **Flush+Reload** cache side-channel proof-of-concept:
+
+| File | Role |
+|------|------|
+| `victim_sim.c` | Victim: repeatedly accesses a probe array indexed by a secret byte |
+| `flush_reload_attacker.c` | Attacker: uses `clflush` + `rdtscp` to measure access times |
+| `flush_reload_attacker_csv.c` | Attacker variant: outputs `iter,cycles` CSV for analysis |
+
 ```bash
-# Run pattern matching tests
-cargo run -p packet-match-fuzz --example kmp_demo
+# Compile
+gcc -O2 -o victim_sim poCs/cache/victim_sim.c
+gcc -O2 -o attacker   poCs/cache/flush_reload_attacker_csv.c
 
-# Custom payload fuzzing
-cargo run -p packet-match-fuzz -- --pattern "HTTP" --input sample.pcap
-```
-
-#### Cryptography Examples
-```bash
-cargo run -p crypto --example demo
-```
-
-## 🔎 Side-Channel Research — Flush+Reload (Cache) PoC
-
-**Warning:** The experimental code in this section is for educational purposes only and must be executed exclusively in a local virtual machine or dedicated experimental equipment, and only in environments with explicit authorization.
-
-Side-channel attacks are techniques that infer secrets from incidental information such as computation time, power consumption, or cache behavior. This repository includes a PoC of **Flush+Reload**, a representative cache-based attack technique. Flush+Reload is a high-resolution, low-noise attack targeting the L3 cache that can determine whether specific memory lines have been accessed, without requiring the attacker and victim to share the same CPU core. This PoC consists of C code located in the `PoCs/cache/` directory.
-
-### Overview
-
-- **Victim Program**: A simulator that repeatedly accesses specific memory indices
-- **Attacker Program**: Uses `clflush` and `rdtscp` to measure memory access times, distinguishing cache hits from misses
-- **Execution Script**: Runs the victim in the background, saves attacker results to CSV, then terminates the victim
-
-### Running the Experiment
-
-```bash
-# Run victim process in background
-./PoCs/cache/victim_sim &
+# Run
+./victim_sim &
 VICTIM_PID=$!
-
-# Run attacker and save to CSV
-./PoCs/cache/flush_reload_attacker > /tmp/flush_reload_data.csv
-
-# Terminate victim process
+./attacker > /tmp/flush_reload_data.csv
 kill $VICTIM_PID
 ```
 
-### Data Format and Interpretation
+Cache hits (~1,000 cycles) vs cache misses (>100,000 cycles) reveal whether the victim accessed the targeted memory line.
 
-The CSV format is `iter,cycles` where small values (~1,000 cycles) indicate cache hits and large values (hundreds of thousands of cycles) indicate cache misses or interrupt/context switches.
+---
 
-**Sample Output:**
-```csv
-iter,cycles
-0,158000
-1,1000
-2,1000
-3,155000
-4,1000
-...
+## 📁 Project Structure
+
+```
+rust-security-suminworld/
+├── Cargo.toml               # Workspace manifest (shared deps, profiles)
+├── tools/
+│   ├── port_scanner/        # Async TCP port scanner
+│   ├── discord_audit_bot/   # Discord security audit bot (5 modules)
+│   ├── packet-match-fuzz/   # KMP matcher + mutation fuzzer
+│   └── wifi_audit/          # Passive 802.11 auditor
+├── research/
+│   ├── crypto/              # Educational cryptography toolkit
+│   ├── merkle/              # SHA-256 Merkle tree
+│   └── kernel-features/     # Rust-for-Linux feature study
+├── poCs/
+│   └── cache/               # Flush+Reload side-channel PoC (C)
+├── docs/
+│   ├── learning_notes.md    # Study notes
+│   └── LEGAL_NOTICE.md      # Legal & ethical guidance
+├── .github/workflows/ci.yml # CI pipeline
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+└── LICENSE                  # MIT
 ```
 
-Measurements typically form two distinct clusters:
-- **Low latency cluster**: Cache hits (victim accessed the memory, data in cache)
-- **High latency cluster**: Cache misses or interrupts/context switches
+---
 
-### Analysis Examples
+## 📊 Code Quality
 
-**Statistics:**
-```bash
-# Count samples
-wc -l /tmp/flush_reload_data.csv
+| Metric | Value |
+|--------|-------|
+| Compiler warnings | **0** |
+| Clippy lints | **0** |
+| Test count | **64** (all passing) |
+| Test failures | **0** |
+| Formatting | `cargo fmt` enforced |
 
-# Calculate mean
-awk -F, 'NR>1{n++; sum+=$2} END{print "Samples:", n, "Mean:", sum/n}' /tmp/flush_reload_data.csv
-```
+### Test Breakdown
 
-**Visualization (Python):**
-```python
-import csv, numpy as np
-import matplotlib.pyplot as plt
+| Crate | Tests |
+|-------|------:|
+| `port_scanner` | 19 |
+| `crypto` | 18 |
+| `packet-match-fuzz` | 16 |
+| `merkle` | 7 |
+| `kernel-features` | 4 |
+| **Total** | **64** |
 
-xs = []
-with open('/tmp/flush_reload_data.csv') as f:
-    r = csv.reader(f)
-    next(r)
-    for _, c in r:
-        xs.append(int(c))
-
-xs = np.array(xs)
-plt.hist(xs, bins=200, log=True)
-plt.xlabel('Cycles')
-plt.ylabel('Count (log scale)')
-plt.title('Flush+Reload Distribution')
-plt.yscale('log')
-plt.show()
-```
-
-### Security Implications
-
-Flush+Reload can be exploited for practical attacks such as tracking AES S-box accesses to extract cryptographic keys. Therefore, defensive techniques should be applied to reduce side-channel leakage, including:
-- Constant-time implementations
-- Cache partitioning (e.g., Intel CAT)
-- Memory access pattern obfuscation
+---
 
 ## 🛣️ Roadmap
 
-### Phase 1: Core Tools (Current)
-- [x] Discord Security Audit Bot
-- [x] Wi-Fi Audit Tool (Monitor Mode)
-- [x] Packet Pattern Matcher & Fuzzer
-- [x] Basic Cryptographic Toolkit
-- [x] Merkle Tree Implementation
-- [x] Linux Kernel Exploitation Labs
+### ✅ Phase 1 — Core (Complete)
+- [x] Async TCP port scanner with CLI
+- [x] Discord security audit bot (modular architecture)
+- [x] KMP packet pattern matcher & mutation fuzzer
+- [x] Passive Wi-Fi audit tool (802.11)
+- [x] Educational cryptography toolkit
+- [x] SHA-256 Merkle tree with domain separation
+- [x] Rust-for-Linux kernel features study
+- [x] Flush+Reload cache side-channel PoC
 
-### Phase 2: Advanced Tools (Next)
-- [ ] **Hash Cracker** - Multi-algorithm password analysis
-  - Dictionary attacks, rainbow tables
-  - GPU acceleration support
-  - Custom wordlist generation
-- [ ] **Web Fuzzer** - Application security testing
-  - Directory and file discovery
-  - Parameter fuzzing and injection testing
-  - Response analysis and filtering
-- [ ] **Log Analyzer** - Security event correlation
-  - Multi-format log parsing
-  - Anomaly detection algorithms
-  - Real-time monitoring dashboards
+### 🔜 Phase 2 — Advanced Tools
+- [ ] **Hash Cracker** — dictionary attacks, rainbow tables
+- [ ] **Web Fuzzer** — directory discovery, parameter injection
+- [ ] **Log Analyzer** — multi-format parsing, anomaly detection
+- [ ] **Packet Sniffer** — real-time protocol decoding
 
-### Phase 3: Research & Advanced Features
-- [ ] **Packet Sniffer** - Network traffic analysis
-  - Real-time packet capture
-  - Protocol analysis and decoding
-  - Traffic pattern recognition
-- [ ] **Vulnerability Research** - Security testing
-  - Proof-of-concept exploits
-  - Fuzzing frameworks
-  - Binary analysis tools
-- [ ] **Protocol Analysis** - Network security
-  - Custom protocol implementations
-  - Security assessment tools
-  - Traffic manipulation utilities
-
-## 📚 Learning Resources
-
-This project serves as a practical learning platform for:
-
-### 🦀 Rust Concepts
-- **Ownership & Borrowing**: Memory safety without garbage collection
-- **Async Programming**: Tokio runtime and concurrent operations  
-- **Error Handling**: Result types and robust error management
-- **Performance**: Zero-cost abstractions and optimization techniques
-
-### 🔒 Security Domains  
-- **Network Security**: TCP/IP protocols, scanning techniques
-- **Cryptography**: Classical and modern cryptographic algorithms
-- **Web Security**: Application testing and vulnerability assessment
-- **Digital Forensics**: Log analysis and incident response
-
-### 📖 Documentation
-
-- **[Learning Notes](./docs/learning_notes.md)** - Study progress and key concepts
-- **[Tool Usage Guide](./docs/tool_usage.md)** - Detailed examples and best practices  
-- **[References](./docs/references.md)** - Curated learning resources and links
+---
 
 ## 🤝 Contributing
 
-We welcome contributions! This project is designed for learning, so contributions of all levels are appreciated.
+Contributions of all levels are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
-### Ways to Contribute
-- 🐛 **Bug Reports**: Found an issue? Please open an issue
-- 💡 **Feature Requests**: Have an idea? We'd love to hear it
-- 📝 **Documentation**: Improve guides, add examples, fix typos
-- 🔧 **Code**: Implement features, fix bugs, optimize performance
-- 🎓 **Learning**: Share your learning journey and insights
+```bash
+# Development workflow
+cargo fmt --all             # Format
+cargo clippy --all-targets  # Lint
+cargo test                  # Test
+```
 
-### Getting Started
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests if applicable
-5. Commit your changes (`git commit -m 'Add amazing feature'`)
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
+Please ensure your PR introduces **zero new warnings** and includes tests for new functionality.
 
-### Code Style
-- Follow standard Rust formatting (`cargo fmt`)
-- Run clippy for linting (`cargo clippy`)
-- Ensure all tests pass (`cargo test`)
-- Add documentation for public APIs
-
-## 📊 Performance & Security
-
-### Performance Characteristics
-- **Discord Bot**: Concurrent async command processing with rate limiting
-- **Wi-Fi Audit**: Real-time packet capture and analysis with minimal CPU overhead
-- **Crypto Operations**: Focus on educational clarity and correctness over raw speed
-- **Memory Usage**: Rust's zero-cost abstractions with minimal heap allocation
-
-### Security Considerations
-- **Memory Safety**: Rust's ownership system prevents buffer overflows and use-after-free
-- **Input Validation**: Comprehensive validation for all network inputs and user parameters
-- **Error Handling**: Graceful failure modes without information leakage
-- **Dependency Security**: Regular updates and review of third-party crates
-
-### Testing & Quality Assurance
-- **Unit Tests**: Comprehensive test coverage for core functionality
-- **Integration Tests**: End-to-end testing of network operations
-- **Continuous Integration**: Automated testing across multiple platforms
-- **Code Quality**: Clippy linting and rustfmt formatting enforcement
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE) file for details.
-
-**Key Points:**
-- ✅ Commercial use allowed
-- ✅ Modification and distribution allowed  
-- ✅ Private use allowed
-- ❗ No warranty or liability provided
+---
 
 ## ⚠️ Ethical Use & Disclaimer
 
-**IMPORTANT**: All tools in this repository are intended for:
-- 📚 **Educational purposes** - Learning cybersecurity concepts
-- 🛡️ **Authorized testing** - Only on systems you own or have explicit permission
-- 🔬 **Security research** - Improving defensive capabilities
+All tools are intended **exclusively** for:
+- 📚 **Educational purposes** — learning cybersecurity concepts
+- 🛡️ **Authorized testing** — only on systems you own or have explicit permission to test
+- 🔬 **Security research** — improving defensive capabilities
 
-### Ethical Guidelines
-- **Always obtain proper authorization** before testing any systems
-- **Respect privacy and confidentiality** of data encountered
-- **Use knowledge responsibly** to improve security, not exploit vulnerabilities
-- **Follow applicable laws and regulations** in your jurisdiction
+The authors assume **no liability** for misuse. Users are solely responsible for ensuring compliance with applicable laws. See [LEGAL_NOTICE.md](./docs/LEGAL_NOTICE.md) and [SECURITY.md](./SECURITY.md).
 
-### Disclaimer
-The authors assume **no liability** for misuse of the provided tools. Users are solely responsible for ensuring their activities comply with applicable laws and regulations.
+---
 
-## 🔗 Links & Resources
+## 📄 License
 
-### Project Links
-- **Repository**: [github.com/sumin-world/rust-security-suminworld](https://github.com/sumin-world/rust-security-suminworld)
-- **Issues**: [Report bugs or request features](https://github.com/sumin-world/rust-security-suminworld/issues)
-- **Releases**: [Latest releases and versions](https://github.com/sumin-world/rust-security-suminworld/releases)
+[MIT](./LICENSE) — free for commercial and personal use.
 
-### Learning Resources
-- **[The Rust Book](https://doc.rust-lang.org/book/)** - Official Rust documentation
-- **[Rustlings](https://github.com/rust-lang/rustlings)** - Interactive Rust exercises
-- **[Tokio Tutorial](https://tokio.rs/tokio/tutorial)** - Async Rust programming
-- **[OWASP](https://owasp.org/)** - Web application security guidelines
-- **[Rust Security](https://github.com/rust-secure-code/safety-dance)** - Secure coding practices
+---
 
-### Dependencies & Credits
-- **[Tokio](https://tokio.rs/)** - Async runtime for Rust
-- **[Serenity](https://github.com/serenity-rs/serenity)** - Discord bot library
-- **[clap](https://github.com/clap-rs/clap)** - Command line argument parser
-- **[serde](https://serde.rs/)** - Serialization framework
-- **[sha2](https://github.com/RustCrypto/hashes)** - SHA-2 hash functions
+## 🔗 Links
+
+| | |
+|---|---|
+| 📦 Repository | [github.com/sumin-world/rust-security-suminworld](https://github.com/sumin-world/rust-security-suminworld) |
+| 🐛 Issues | [Report a bug](https://github.com/sumin-world/rust-security-suminworld/issues) |
+| 📖 Rust Book | [doc.rust-lang.org/book](https://doc.rust-lang.org/book/) |
+| ⚡ Tokio | [tokio.rs](https://tokio.rs/) |
+| 🔐 RustCrypto | [github.com/RustCrypto](https://github.com/RustCrypto) |
 
 ---
 
 <div align="center">
-<a href="https://github.com/sumin-world/rust-security-suminworld">⭐ Star</a> • 
-<a href="https://github.com/sumin-world/rust-security-suminworld/issues">Issues</a> • 
-<a href="https://github.com/sumin-world/rust-security-suminworld/releases">Releases</a>
+
+**Built with 🦀 Rust — memory-safe, blazingly fast, fearlessly concurrent.**
+
+[⭐ Star](https://github.com/sumin-world/rust-security-suminworld) · [Issues](https://github.com/sumin-world/rust-security-suminworld/issues) · [Releases](https://github.com/sumin-world/rust-security-suminworld/releases)
+
 </div>
-
----
-
-> ⚠️ See docs/LEGAL_NOTICE.md for legal and ethical guidance. Run experiments only on hardware you own or have explicit permission to test.

@@ -1,8 +1,0 @@
-[package]
-name = "trace_analyzer"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-clap = "4"
-csv = "1"

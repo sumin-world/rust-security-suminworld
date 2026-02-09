@@ -153,7 +153,7 @@ fn dedup_sort(mut v: Vec<u16>) -> Vec<u16> {
     v
 }
 
-fn preview_ports(ports: &Vec<u16>, max_show: usize) -> String {
+fn preview_ports(ports: &[u16], max_show: usize) -> String {
     if ports.len() <= max_show {
         return format!("{:?}", ports);
     }
@@ -161,4 +161,123 @@ fn preview_ports(ports: &Vec<u16>, max_show: usize) -> String {
     let last = *ports.last().unwrap();
     first.push(last);
     format!("{:?} … (truncated)", first)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // --- parse_range ---
+
+    #[test]
+    fn parse_range_normal() {
+        assert_eq!(parse_range("1-5"), vec![1, 2, 3, 4, 5]);
+    }
+
+    #[test]
+    fn parse_range_single_port() {
+        assert_eq!(parse_range("80-80"), vec![80]);
+    }
+
+    #[test]
+    fn parse_range_swapped_bounds() {
+        // start > end should swap
+        assert_eq!(
+            parse_range("100-90"),
+            vec![90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]
+        );
+    }
+
+    #[test]
+    fn parse_range_zero_clamped() {
+        // port 0 is invalid; should be clamped to 1
+        let r = parse_range("0-3");
+        assert_eq!(r, vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn parse_range_no_dash() {
+        assert!(parse_range("80").is_empty());
+    }
+
+    #[test]
+    fn parse_range_invalid_numbers() {
+        assert!(parse_range("abc-xyz").is_empty());
+    }
+
+    #[test]
+    fn parse_range_with_spaces() {
+        assert_eq!(parse_range("  20 - 22 "), vec![20, 21, 22]);
+    }
+
+    // --- parse_ports_list ---
+
+    #[test]
+    fn parse_ports_list_single() {
+        assert_eq!(parse_ports_list("80"), vec![80]);
+    }
+
+    #[test]
+    fn parse_ports_list_multiple() {
+        assert_eq!(parse_ports_list("22,80,443"), vec![22, 80, 443]);
+    }
+
+    #[test]
+    fn parse_ports_list_with_range() {
+        assert_eq!(parse_ports_list("22,80-82,443"), vec![22, 80, 81, 82, 443]);
+    }
+
+    #[test]
+    fn parse_ports_list_deduplicates() {
+        assert_eq!(parse_ports_list("80,80,443,443"), vec![80, 443]);
+    }
+
+    #[test]
+    fn parse_ports_list_unsorted_input() {
+        assert_eq!(parse_ports_list("443,22,80"), vec![22, 80, 443]);
+    }
+
+    #[test]
+    fn parse_ports_list_skips_zero() {
+        assert_eq!(parse_ports_list("0,80,443"), vec![80, 443]);
+    }
+
+    #[test]
+    fn parse_ports_list_empty_string() {
+        assert!(parse_ports_list("").is_empty());
+    }
+
+    #[test]
+    fn parse_ports_list_extra_commas() {
+        assert_eq!(parse_ports_list(",80,,443,"), vec![80, 443]);
+    }
+
+    // --- dedup_sort ---
+
+    #[test]
+    fn dedup_sort_removes_duplicates_and_sorts() {
+        assert_eq!(dedup_sort(vec![3, 1, 2, 1, 3]), vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn dedup_sort_empty() {
+        assert_eq!(dedup_sort(vec![]), Vec::<u16>::new());
+    }
+
+    // --- preview_ports ---
+
+    #[test]
+    fn preview_ports_short_list() {
+        let ports = vec![22, 80, 443];
+        let s = preview_ports(&ports, 5);
+        assert_eq!(s, "[22, 80, 443]");
+    }
+
+    #[test]
+    fn preview_ports_truncated() {
+        let ports: Vec<u16> = (1..=100).collect();
+        let s = preview_ports(&ports, 3);
+        assert!(s.contains("truncated"));
+        assert!(s.contains("100")); // last port included
+    }
 }

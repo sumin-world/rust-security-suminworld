@@ -1,6 +1,6 @@
+use chrono::Utc;
 use clap::{ArgAction, Parser};
 use comfy_table::{presets::UTF8_FULL, Table};
-use chrono::Utc;
 
 mod capture;
 mod parse;
@@ -34,9 +34,8 @@ struct Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
-    let default_filter = String::from(
-        "type mgt and (subtype beacon or subtype probe-req or subtype probe-res)",
-    );
+    let default_filter =
+        String::from("type mgt and (subtype beacon or subtype probe-req or subtype probe-res)");
     let filter = args.filter.unwrap_or(default_filter);
 
     let mut cap = capture::open(&args.iface, &filter)?;

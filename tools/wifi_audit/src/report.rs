@@ -1,5 +1,5 @@
 use crate::parse::Event;
-use comfy_table::{Table, Cell}; // Cell 추가
+use comfy_table::{Cell, Table}; // Cell 추가
 use macaddr::MacAddr6;
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -29,11 +29,20 @@ impl Stats {
                 }
                 entry.beacons += 1;
             }
-            Event::ProbeReq { sta, .. } => {
+            Event::ProbeReq { sta, ssid } => {
                 self.clients.insert(MacAddr6::from(sta));
+                if let Some(name) = ssid {
+                    if !name.is_empty() {
+                        // Track which SSIDs clients are probing for
+                        self.ssid_beacons.entry(name).or_default();
+                    }
+                }
             }
-            Event::ProbeRes { .. } => {
-                // 나중에 필요하면 응답 카운터 추가 가능
+            Event::ProbeRes { bssid, ssid } => {
+                let mac = MacAddr6::from(bssid);
+                let name = ssid.to_string();
+                let entry = self.ssid_beacons.entry(name).or_default();
+                entry.bssids.insert(mac);
             }
         }
     }

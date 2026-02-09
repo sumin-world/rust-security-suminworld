@@ -69,3 +69,40 @@ impl SimpleFeistel {
         ((right as u64) << 32) | (left as u64)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn xor_encrypt_decrypt_roundtrip() {
+        let cipher = XorCipher::new(b"mysecretkey");
+        let plain = b"Hello, XOR cipher!";
+        let enc = cipher.encrypt(plain);
+        assert_ne!(&enc, plain);
+        assert_eq!(cipher.decrypt(&enc), plain);
+    }
+
+    #[test]
+    #[should_panic(expected = "must not be empty")]
+    fn xor_empty_key_panics() {
+        XorCipher::new(b"");
+    }
+
+    #[test]
+    fn feistel_encrypt_decrypt_roundtrip() {
+        let cipher = SimpleFeistel::new(0xDEAD_BEEF_CAFE_BABE, 16);
+        let plain: u64 = 0x0123_4567_89AB_CDEF;
+        let enc = cipher.encrypt(plain);
+        assert_ne!(enc, plain);
+        assert_eq!(cipher.decrypt(enc), plain);
+    }
+
+    #[test]
+    fn feistel_different_keys_produce_different_output() {
+        let c1 = SimpleFeistel::new(1, 8);
+        let c2 = SimpleFeistel::new(2, 8);
+        let plain: u64 = 42;
+        assert_ne!(c1.encrypt(plain), c2.encrypt(plain));
+    }
+}

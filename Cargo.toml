@@ -3,8 +3,9 @@ members = [
   "tools/port_scanner",
   "tools/packet-match-fuzz",
   "tools/discord_audit_bot",
+  "tools/wifi_audit",
   "research/crypto",
-  "research/merkle", "tools/wifi_audit",
+  "research/merkle",
   "research/kernel-features",
 ]
 resolver = "2"
@@ -13,7 +14,18 @@ resolver = "2"
 version = "0.1.0"
 edition = "2021"
 authors = ["sumin-world"]
+license = "MIT"
 
-# 공통으로 쓸 의존성 있으면 여기 선언 가능
-#[workspace.dependencies]
-#proptest = "1"
+[workspace.dependencies]
+tokio  = { version = "1", features = ["full"] }
+clap   = { version = "4", features = ["derive"] }
+serde  = { version = "1", features = ["derive"] }
+chrono = { version = "0.4", features = ["clock", "serde"] }
+anyhow = "1"
+thiserror = "1"
+sha2   = "0.10"
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true

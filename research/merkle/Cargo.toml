@@ -3,7 +3,7 @@ name = "merkle"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
+description = "Merkle hash tree using SHA-256"
 
 [dependencies]
-sha2 = "0.10"
-hex = "0.4"
+sha2.workspace = true
